@@ -4,222 +4,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>스파르타플릭스</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>저를 소개합니다</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Noto+Sans+KR:wght@100..900&display=swap');
 
-        * {
-            font-family: "Do Hyeon", sans-serif;
-            font-weight: 400;
-            font-style: normal;
-        }
-
-        .main {
-            background-color: green;
-            color: white;
-
-            background-image: url(https://occ-0-1123-1217.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABeIfo7VL_VDyKnljV66IkR-4XLb6xpZqhpLSo3JUtbivnEW4s60PD27muH1mdaANM_8rGpgbm6L2oDgA_iELHZLZ2IQjG5lvp5d2.jpg?r=e6e.jpg);
-            background-position: center;
-            background-size: cover;
-        }
-
         body {
-            background-color: black;
+            margin: 0;
+            font-family: var(--bs-font-sans-serif);
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .mycards {
-            width: 1200px;
-            margin: 20px auto 20px auto;
+        .pics {
+            /* 전체 케러셀 */
+            width: 700px;
+            float: left;
+            position: relative;
+            left: 50%;
+            object-fit: cover;
         }
 
-        .mypostingbox {
-            width: 500px;
-            margin: 20px auto 20px auto;
-
-            border: 1px solid white;
-            padding: 20px;
-            border-radius: 5px;
+        .carousel-inner {
+            width: auto;
+            height: 600px;
+            /* 이미지 높이 변경 */
         }
 
-        .form-floating>input {
-            background-color: transparent;
-            color: white;
-
+        .carousel-item {
+            width: auto;
+            height: 100%;
         }
 
-        .form-floating>label {
-            color: white;
+        .d-block {
+            display: block;
+            width: auto;
+            height: 100%;
         }
 
-        .input-group>label {
-            background-color: transparent;
-            color: white;
+        .carousel-caption {
+            position: absolute;
+            right: 15%;
+            bottom: 1.25rem;
+            left: 15%;
+            padding-top: 1.25rem;
+            padding-bottom: 1.25rem;
+
+            text-align: center;
         }
 
-        .mypostingbox>button {
-            width: 100%;
+        .carousel-caption h5 {
+            font-size: 30px;
+            font-weight: bold;
+            color: rgb(255, 255, 255);
+        }
+
+        .carousel-caption p {
+            font-size: 30px;
+            font-weight: bold;
+            color: rgb(255, 255, 255);
+        }
+
+        a.nav-link {
+            color: #000000;
+            font-size: large;
+        }
+
+        .carousel-indicators {
+            justify-content: flex-end;
+            margin-right: 0;
+            margin-left: 0;
         }
     </style>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-            apiKey: "AIzaSyDamt9Y3u7C3yPwtEXNpOz6Cf63XpaBo4Q",
-            authDomain: "sprta-1c57d.firebaseapp.com",
-            projectId: "sprta-1c57d",
-            storageBucket: "sprta-1c57d.firebasestorage.app",
-            messagingSenderId: "63647145024",
-            appId: "1:63647145024:web:341ac2bea8f2f79248d3a5",
-            measurementId: "G-DQT7SLCRFQ"
-        };
-
-
-        // Firebase 인스턴스 초기화
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        $("#postingbtn").click(async function () {
-
-            let image = $('#image').val();
-            let title = $('#title').val();
-            let star = $('#star').val();
-            let comment = $('#comment').val();
-
-            let doc = {
-                'image': image,
-                'title': title,
-                'star': star,
-                'comment': comment
-
-            };
-            await addDoc(collection(db, "movies"), doc);
-            alert('저장 완료');
-            window.location.reload();
-        })
-
-        let url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
-        fetch(url).then(res => res.json()).then(data => {
-            let temp = data['temp'];
-            if (temp > 20) {
-                $('#msg').text('더워요');
-            } else {
-                $('#msg').text('추워요');
-            }
-
-
-        });
-
-        let docs = await getDocs(collection(db, "movies"));
-        docs.forEach((doc) => {
-            let row = doc.data();
-            let image = row['image'];
-            let title = row['title'];
-            let comment = row['comment'];
-            let star = row['star'];
-
-            let temp_html = `
-            <div class="col">
-                <div class="card h-100">
-                    <img src="${image}"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">${title}</h5>
-                        <p class="card-text">${star}</p>
-                        <p class="card-text">${comment}</p>
-                    </div>
-                </div>
-            </div>`;
-            $('#card').append(temp_html);
-        });
-
-        $("#savebtn").click(async function () {
-            $('#postingbox').toggle();
-        })
-
-    </script>
 </head>
 
 <body>
-    <header class="p-3 text-bg-dark">
-        <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-                        <use xlink:href="#bootstrap"></use>
-                    </svg>
-                </a>
-
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="#" class="nav-link px-2 text-danger">Spartaflix</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">홈</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">시리즈</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">영화</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">내가 찜한 콘텐츠</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">현재 기온: <span id="msg"></span></a></li>
-                </ul>
-
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                    <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
-                        aria-label="Search">
-                </form>
-
-                <div class="text-end">
-                    <button type="button" class="btn btn-outline-light me-2">Login</button>
-                    <button type="button" class="btn btn-danger">Sign-up</button>
+    <div id="carouselExampleCaptions" class="carousel slide">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://wallpaperswide.com/download/galaxy_outer_space-wallpaper-1920x600.jpg"
+                    class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>안녕하세요 제 이름은 명민준입니다</h5>
+                    <p>MBTI는 INFP, 좌우명은 "오늘 할 일을 내일로 미루지 말자" 입니다.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="
+                https://wallpaperswide.com/download/dark_space-wallpaper-1920x600.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>사용하는 언어</h5>
+                    <p>HTML, (곧)JAVA, (언젠가)KOTLIN 입니다.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.alphacoders.com/555/thumb-1920-555941.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>TMI</h5>
+                    <p>게임이랑 드라이브 좋아하는데 시간이 없어서 못하고 있네요, 그리고 몸살감기 걸려서 힘듭니다.</p>
                 </div>
             </div>
         </div>
-    </header>
-    <div class="main">
-        <div class="p-5 mb-4 bg-body-tertiary rounded-3">
-            <div class="container-fluid py-5">
-                <h1 class="display-5 fw-bold">킹덤2</h1>
-                <p class="col-md-8 fs-4">병든 왕을 둘러싸고 흉흉한 소문이 떠돈다. 어둠에 뒤덮인 조선, 기이한 역병에 신음하는 산하. 정체 모를 악에 맞서 백성을 구원할 희망은 오직
-                    세자뿐이다.</p>
-                <button id="savebtn" type="button" class="btn btn-outline-light">영화 기록하기</button>
-                <button type="button" class="btn btn-outline-light">상세정보</button>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        저의 나이는?
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <strong>2000년 4월 14일</strong> 
+                         2000년 백룡의 해에 태어났습니다!
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        자신의 장점
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <strong>돌부처 멘탈</strong>
+                        학생일때부터 돌부처 멘탈이라고 많이 들었습니다, 매사에 평온하게 살고 있습니다.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        앞으로의 포부
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <strong>지금이 힘들어야 나중이 편하다</strong>
+                        미래를 생각하면 지금 많이 굴러야 한다고 생각합니다, 정말로요
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="mypostingbox" id="postingbox">
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="image" placeholder="영화 이미지 주소">
-            <label for="floatingInput">영화 이미지 주소</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="title" placeholder="영화 제목">
-            <label for="floatingInput">영화 제목</label>
-        </div>
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">별점</label>
-            <select class="form-select" id="star">
-                <option selected>별점선택</option>
-                <option value="⭐">⭐</option>
-                <option value="⭐⭐">⭐⭐</option>
-                <option value="⭐⭐⭐">⭐⭐⭐</option>
-                <option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
-                <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
-            </select>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="comment" placeholder="추천 이유">
-            <label for="floatingInput">추천 이유</label>
-        </div>
-        <button id="postingbtn" type="button" class="btn btn-danger">기록하기</button>
+    <div class="container">
+            <footer class="py-3 my-4">
+              <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+              </ul>
+              <p class="text-center text-body-secondary">© 2024 Company, Inc</p>
+            </footer>
     </div>
-    <div class="mycards">
-        <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
-        </div>
-    </div>
-
 </body>
 
 </html>
