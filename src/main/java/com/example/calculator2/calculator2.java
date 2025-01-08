@@ -1,27 +1,52 @@
 package com.example.calculator2;
 
-public class calculator2 {
-    private double result;
+import java.util.ArrayList;
+import java.util.List;
 
-    public double calculate2(String sign, int firstNum, int secondNum) {
-        switch (sign) {
+
+// 계산을 수행하는 클래스
+public class calculator2 {
+    private static List<Double> results = new ArrayList<>(); // 계산 결과를 저장하는 컬렉션 필드
+
+    // 계산 수행 메서드
+    public static double calculate(double num1, double num2, String operator) {
+        double result = 0;
+        
+        switch (operator) {
             case "+":
-                result = firstNum + secondNum;
+                result = num1 + num2;
                 break;
             case "-":
-                result = firstNum - secondNum;
+                result = num1 - num2;
                 break;
             case "*":
-                result = firstNum * secondNum;
+                result = num1 * num2;
                 break;
             case "/":
-                if (secondNum == 0) {
-                    System.out.println("0으로 나눌수 없습니다.");
-                    break;
+                if (num2 == 0) {
+                    System.out.println("0으로 나눌 수 없습니다.");
                 }
-                result = (double) firstNum / secondNum;
+                result = num1 / num2;
                 break;
+            default:
+                System.out.println("유효하지 않은 연산자입니다.");
         }
+        // 계산 결과 저장
+        addResult(result);
         return result;
+    }
+
+    // 결과를 추가하는 메서드 (private)
+    private static void addResult(double result) {
+        results.add(result);
+    }
+
+    // 결과 리스트를 반환하는 getter
+    public static List<Double> getResults() {
+        return results;
+    }
+
+    public static void clearResults() {
+        results.clear();
     }
 }
