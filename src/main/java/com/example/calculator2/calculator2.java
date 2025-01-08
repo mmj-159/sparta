@@ -28,10 +28,9 @@ public class calculator2 {
                 }
                 result = num1 / num2;
                 break;
-            default:
+            default: // 아무 case 에도 해당 안되면 여기서부터 시작이라는 뜻
                 System.out.println("유효하지 않은 연산자입니다.");
         }
-
         addResult(result);
         return result;
     }
