@@ -1,6 +1,5 @@
 package com.example.calculator2;
 
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -26,5 +25,6 @@ public class Main {
 
         } while (!sc.next().equals("exit"));
         System.out.println("프로그램 종료.");
+
     }
 }
