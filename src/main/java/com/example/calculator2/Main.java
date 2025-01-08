@@ -25,9 +25,7 @@ public class Main {
             if (Objects.equals(sc.next(), "no") || Objects.equals(sc.next(), "No")|| Objects.equals(sc.next(), "NO")) {
                 System.out.println("프로그램 종료.");
                 break;
-
             }
-
         }
     }
 }
